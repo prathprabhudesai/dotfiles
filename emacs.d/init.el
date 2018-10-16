@@ -20,10 +20,11 @@
 
 ;; install packages from the list if not installed
 (defvar install-package-list '(
-    color-theme
+     color-theme
      auto-complete
      autopair
      xcscope
+     emamux
      markdown-mode
      dracula-theme
      company
@@ -46,7 +47,6 @@
 
 ;; auto-complete-mode
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories (concat dotfiles-dir "/extensions/auto-complete/ac-dict"))
 (ac-config-default)
 
 ;; xcscope: Cscope for emacs
@@ -132,9 +132,8 @@
       truncate-partial-width-windows nil
       uniquify-buffer-name-style 'forward
       ediff-window-setup-function 'ediff-setup-windows-plain
-      oddmuse-directory (concat dotfiles-dir "oddmuse")
       xterm-mouse-mode t
-      save-place-file (concat dotfiles-dir "places"))
+      )
 
 (add-to-list 'safe-local-variable-values '(lexical-binding . t))
 (add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
@@ -171,10 +170,6 @@
 ;; Hippie expand: at times perhaps too hip
 (delete 'try-expand-line hippie-expand-try-functions-list)
 (delete 'try-expand-list hippie-expand-try-functions-list)
-
-;; Don't clutter up directories with files~
-(setq backup-directory-alist `(("." . ,(expand-file-name
-                                        (concat dotfiles-dir "backups")))))
 
 ;; nxhtml stuff
 (setq mumamo-chunk-coloring 'submode-colored
