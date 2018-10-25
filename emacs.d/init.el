@@ -30,6 +30,7 @@
      company
      ido-vertical-mode
      smex
+     company
      )
   )
 
@@ -46,8 +47,9 @@
 (setq autopair-autowrap t)
 
 ;; auto-complete-mode
-(require 'auto-complete-config)
-(ac-config-default)
+;;(require 'auto-complete-config)
+;;(ac-config-default)
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; xcscope: Cscope for emacs
 (require 'xcscope)
@@ -59,10 +61,35 @@
 (ido-vertical-mode)
 (setq ido-vertical-define-keys 'C-n-C-p-up-and-down)
 
+;; ibuffer setup
+(autoload 'ibuffer "ibuffer" "List buffers." t)
+
+(setq ibuffer-formats '((mark modified read-only " " (name 40 40) " " (size 6 -1 :right) " " (mode 16 16 :center) " " (process 8 -1) " " filename)
+			(mark " " (name 16 -1) " " filename))
+      ibuffer-saved-filter-groups '(("default"
+				     ("c" (mode . c-mode))
+				     ("c++" (mode . c++-mode))
+				     ("go" (mode . go-mode))
+				     ("python" (mode . python-mode))
+				     ("haskell" (mode . haskell-mode))
+				     ("emacs" (or (name . "^\\*scratch\\*$") (name . "^\\*Messages\\*$"))))
+				     ("dired" (mode . dired-mode)))
+      ibuffer-elide-long-columns t
+      ibuffer-eliding-string "&")
+
+(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-switch-to-saved-filter-groups "default")))
+
+;; smex setup
+(require 'smex)
+(smex-initialize)
+
 ;; ---- BASIC EDITOR CONFIGURATION ----
 
 ;; Desktop mode
 (desktop-save-mode 1)
+
+;; Show matching paren
+(show-paren-mode t)
 
 ;; Toggle fullscreen
 (defun toggle-fullscreen()
@@ -89,24 +116,47 @@
   (setq linum-format "%4d | ")
   )
 
-(global-hl-line-mode 1)
-;;C indentation 
+;;(global-hl-line-mode 1)
+
+;;C style 
 
 (defun config-indent-80andNoTrail()
   (setq whitespace-line-column 80) ;; limit line length
   (setq whitespace-style '(face lines-tail))
-  (add-hook 'prog-mode-hook 'whitespace-mode)
+  ;;(add-hook 'prog-mode-hook 'whitespace-mode)
   (setq show-trailing-whitespace t)
   )
 
-(defun config-indent-linux()
-  (setq c-default-style "linux")
-  ;; Use TABs of length of 8
-  (setq indent-tabs-mode 1
-	tab-width 4
-	c-basic-offset 4)
-  )
-(add-hook 'c-mode-hook 'config-indent-linux)
+(setq auto-mode-alist (cons '("\\.c$" . c-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.h$" . c++-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.tcc$" . c++-mode) auto-mode-alist))
+
+(c-add-style "my-cc-style" 
+	     '("bsd"
+	       (tab-width . 8)
+	       (indent-tabs-mode . nil)
+	       (c-basic-offset . 4)
+	       (c-tab-always-indent . nil)
+	       (c-hanging-braces-alist . ((brace-list-open)
+									  (brace-list-close)
+									  (brace-entry-open)
+									  (brace-entry-close)
+									  (statement-cont)
+									  (block-close . c-snug-do-while)
+									  (extern-lang-open after)
+									  (namespace-open after)))
+	       (c-hanging-colons-alist . ((member-init-intro before)
+									  (inher-intro)
+									  (case-label after)
+									  (label after)
+									  (access-label after)))
+	       (c-cleanup-list . (scope-operator
+							  defun-close-semi))))
+
+(add-hook 'c-mode-common-hook (lambda () (progn
+					   (c-set-style "my-cc-style")
+					   (define-key c-mode-base-map "\C-m" 'c-context-line-break)
+					   (c-toggle-auto-hungry-state t))))
 (add-hook 'c-mode-common-hook 'config-indent-80andNoTrail)
 
 (when window-system
@@ -128,7 +178,7 @@
       color-theme-is-global t
       shift-select-mode nil
       mouse-yank-at-point t
-      require-final-newline t
+      next-line-add-newlines nil
       truncate-partial-width-windows nil
       uniquify-buffer-name-style 'forward
       ediff-window-setup-function 'ediff-setup-windows-plain
@@ -295,8 +345,43 @@
 (global-set-key [C-iso-lefttab] 'previous-buffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-;;goto line
+;; goto line
 (global-set-key (kbd "M-g") 'goto-line)
 
-;;git blame
+;; git blame
 (global-set-key (kbd "C-c g b") 'vc-annotate)
+
+;; smex keys
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;;------old M-x
+(global-set-key (kbd "C-c M-x") 'execute-extended-command)
+
+;; window movements
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+
+;; custom variables (added automatically + manual)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(custom-enabled-themes (quote (dracula)))
+ '(custom-safe-themes
+   (quote
+    ("aaffceb9b0f539b6ad6becb8e96a04f2140c8faa1de8039a343a4f1e009174fb" default)))
+ '(grep-command "grep -nH -i -r ")
+ '(package-selected-packages
+   (quote
+    (company-c-headers darkroom auto-auto-indent aggressive-indent emamux xcscope smex markdown-mode ido-vertical-mode dracula-theme company color-theme autopair auto-complete))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
