@@ -32,6 +32,7 @@
      smex
      company
      color-theme-sanityinc-tomorrow
+     srcery-theme
      )
   )
 
@@ -117,7 +118,7 @@
   (setq linum-format "%4d | ")
   )
 
-;;(global-hl-line-mode 1)
+(global-hl-line-mode 1)
 
 ;;C style 
 
@@ -364,8 +365,8 @@
 
 ;;---------- THEMES ---------------
 
-(require 'color-theme-sanityinc-tomorrow)
-(load-theme 'sanityinc-tomorrow-bright t)
+(require 'srcery-theme)
+(load-theme 'srcery t)
 
 ;; custom variables (added automatically + manual)
 (custom-set-variables
@@ -376,7 +377,10 @@
  '(custom-safe-themes
    (quote
     ("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" default)))
- '(grep-command "grep -nH -i -r "))
+ '(grep-command "grep -nH -i -r ")
+ '(package-selected-packages
+   (quote
+    (srcery-theme color-theme-sanityinc-tomorrow smex ido-vertical-mode company dracula-theme markdown-mode emamux xcscope autopair auto-complete color-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
