@@ -1,6 +1,6 @@
 ;; ---- EMACS CONFIGURATION ----
 
-(package-initialize)
+(unless package--initialized (package-initialize t))
 (setq package-check-signature 'nil)
 (setq user-full-name "Prathamesh Prabhudesai")
 (setq user-mail-address "prathprabhudesai@gmail.com")
@@ -10,8 +10,8 @@
 ;; add repositories
 (when (>= emacs-major-version 24)
   (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (unless package--initialized (package-initialize t))
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
   (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
   )
 
@@ -20,7 +20,6 @@
 
 ;; install packages from the list if not installed
 (defvar install-package-list '(
-     color-theme
      auto-complete
      autopair
      xcscope
@@ -33,6 +32,9 @@
      company
      color-theme-sanityinc-tomorrow
      srcery-theme
+     dashboard
+     spacemacs-theme
+     spaceline
      )
   )
 
@@ -93,6 +95,18 @@
 ;; Show matching paren
 (show-paren-mode t)
 
+;; Remove the splash screen
+(setq inhibit-splash-screen t)
+
+;; Remove the menu bar
+(customize-set-variable 'menu-bar-mode nil)
+
+;; Remove the tool bar
+(customize-set-variable 'tool-bar-mode nil)
+
+;; Remove the scroll bar
+(customize-set-variable 'scroll-bar-mode nil)
+
 ;; Toggle fullscreen
 (defun toggle-fullscreen()
   (interactive)
@@ -118,7 +132,8 @@
   (setq linum-format "%4d | ")
   )
 
-(global-hl-line-mode 1)
+;; Horizontal selection line
+;;(global-hl-line-mode 1)
 
 ;;C style 
 
@@ -135,9 +150,9 @@
 
 (c-add-style "my-cc-style" 
 	     '("bsd"
-	       (tab-width . 8)
+	       (tab-width . 2)
 	       (indent-tabs-mode . nil)
-	       (c-basic-offset . 4)
+	       (c-basic-offset . 2)
 	       (c-tab-always-indent . nil)
 	       (c-hanging-braces-alist . ((brace-list-open)
 									  (brace-list-close)
@@ -363,27 +378,44 @@
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 
+;; 80 coloumn indicator
+(defun sanityinc/fci-enabled-p () (symbol-value 'fci-mode))
+
+(defvar sanityinc/fci-mode-suppressed nil)
+(make-variable-buffer-local 'sanityinc/fci-mode-suppressed)
+
+(defadvice popup-create (before suppress-fci-mode activate)
+  "Suspend fci-mode while popups are visible"
+  (let ((fci-enabled (sanityinc/fci-enabled-p)))
+    (when fci-enabled
+      (setq sanityinc/fci-mode-suppressed fci-enabled)
+      (turn-off-fci-mode))))
+
+(defadvice popup-delete (after restore-fci-mode activate)
+  "Restore fci-mode when all popups have closed"
+  (when (and sanityinc/fci-mode-suppressed
+	     (null popup-instances))
+    (setq sanityinc/fci-mode-suppressed nil)
+    (turn-on-fci-mode)))
+
+;; Dashboard Setup
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+
 ;;---------- THEMES ---------------
 
-(require 'srcery-theme)
-(load-theme 'srcery t)
+;;(require 'spacemacs-theme)
+(load-theme 'spacemacs-dark t)
+(set-face-attribute 'region nil :background "#aaaaaa" :foreground "#000000")
 
-;; custom variables (added automatically + manual)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" default)))
- '(grep-command "grep -nH -i -r ")
- '(package-selected-packages
-   (quote
-    (srcery-theme color-theme-sanityinc-tomorrow smex ido-vertical-mode company dracula-theme markdown-mode emamux xcscope autopair auto-complete color-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+;; Customizing colors used in diff mode
+(defun custom-diff-colors ()
+  "update the colors for diff faces"
+  (set-face-attribute
+   'diff-added nil :background nil :foreground "green")
+  (set-face-attribute
+   'diff-removed nil :background nil :foreground "red")
+  (set-face-attribute
+   'diff-changed nil :background nil :foreground "purple"))
+(eval-after-load "diff-mode" '(custom-diff-colors))
