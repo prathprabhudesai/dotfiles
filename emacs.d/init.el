@@ -1,6 +1,5 @@
 ;; ---- EMACS CONFIGURATION ----
 
-(unless package--initialized (package-initialize t))
 (setq package-check-signature 'nil)
 (setq user-full-name "Prathamesh Prabhudesai")
 (setq user-mail-address "prathprabhudesai@gmail.com")
