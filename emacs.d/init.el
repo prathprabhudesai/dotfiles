@@ -34,6 +34,10 @@
      dashboard
      spacemacs-theme
      spaceline
+     flycheck
+     ;; python support
+     elpy
+     py-autopep8
      ;; latex support
      auctex
      auto-complete-auctex
@@ -130,11 +134,22 @@
 (autoload 'linum-mode "linum" "toggle line numbers on/off" t)
 (if (display-graphic-p)
   (setq linum-format " %d")
-  (setq linum-format "%4d | ")
-  )
+  (setq linum-format "%4d | "))
 
 ;; Horizontal selection line
 ;;(global-hl-line-mode 1)
+
+;; Enable Elpy
+(elpy-enable)
+
+;; Flycheck
+(when (require 'flycheck nil t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+;; Enable autopep8
+(require 'py-autopep8)
+(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 ;;C style 
 
