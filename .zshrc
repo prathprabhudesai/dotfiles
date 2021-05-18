@@ -4,6 +4,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/usr2/pprabhud/.oh-my-zsh"
 
+# source theme
+source ~/.zsh_packages/powerlevel10k/powerlevel10k.zsh-theme
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -98,10 +101,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 source ~/.zshrc_aliases
-source ~/.zshrc_functions
 export PATH=~/bin:$PATH
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr2/pprabhud/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh_packages/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh_packages/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
