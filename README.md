@@ -4,7 +4,7 @@ My linux configuration
 for emacs do this after cloning the repo
 cd ~;<br>
 rm -rf .emacs.d;<br>
-ln -s dotfiles/.emacs.d ~/.emacs.d;<br>
+ln -s dotfiles/emacs.d ~/.emacs.d;<br>
 
 
 
