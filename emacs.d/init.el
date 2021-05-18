@@ -44,6 +44,7 @@
      auto-complete-auctex
      pdf-tools
      auctex-latexmk
+     latex-extra
      )
   )
 
