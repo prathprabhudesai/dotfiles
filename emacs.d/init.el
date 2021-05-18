@@ -20,7 +20,6 @@
 ;; install packages from the list if not installed
 (defvar install-package-list '(
      auto-complete
-     electric-pair-mode
      xcscope
      emamux
      markdown-mode
@@ -45,9 +44,8 @@
 ;; configure installed and exising packages
 
 ;; auto-pair-mode
-(require 'autopair)
-(autopair-global-mode)
-(setq autopair-autowrap t)
+(require 'flex-autopair)
+(flex-autopair-mode 1)
 
 ;; auto-complete-mode
 ;;(require 'auto-complete-config)
