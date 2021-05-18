@@ -2,9 +2,9 @@
 My linux configuration
 
 for emacs do this after cloning the repo
-cd ~
-rm -rf .emacs.d
-ln -s emacs.d .emacs.d
+cd ~;<br>
+rm -rf .emacs.d;<br>
+ln -s dotfiles/.emacs.d ~/.emacs.d;<br>
 
 
 
