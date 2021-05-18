@@ -12,11 +12,14 @@ ln -s emacs.d .emacs.d
 https://github.com/gpakosz/.tmux
 
 # zsh
-## theme
+## theme powerlevel 10k
 https://github.com/romkatv/powerlevel10k<br>
-brew install romkatv/powerlevel10k/powerlevel10k<br>
-echo "source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh_packages/
 
-## modules
-zsh-autosuggestions (https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md) <br>
-zsh-syntax-highlighting (https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)
+## auto suggestions
+https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md <br>
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh_packages/
+
+## fish like syntax highlighting
+https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh_packages
