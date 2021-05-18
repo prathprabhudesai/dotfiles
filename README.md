@@ -23,3 +23,6 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh_packages/
 ## fish like syntax highlighting
 https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh_packages
+
+# basic vim setup
+https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
