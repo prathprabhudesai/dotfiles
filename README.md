@@ -18,5 +18,5 @@ brew install romkatv/powerlevel10k/powerlevel10k<br>
 echo "source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
 
 ## modules
-zsh-autosuggestions<br>
-zsh-syntax-highlighting
+zsh-autosuggestions (https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md) <br>
+zsh-syntax-highlighting (https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)
