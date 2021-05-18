@@ -34,6 +34,9 @@
      dashboard
      spacemacs-theme
      spaceline
+     ;; latex support
+     auctex
+     auto-complete-auctex
      )
   )
 
