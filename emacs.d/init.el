@@ -155,6 +155,7 @@
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 ;; Setup pdf-tools
+(require 'use-package)
 (use-package pdf-tools
   :pin manual
   :init (pdf-tools-install)
