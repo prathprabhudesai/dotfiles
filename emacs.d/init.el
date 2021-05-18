@@ -20,6 +20,7 @@
 ;; install packages from the list if not installed
 (defvar install-package-list '(
      auto-complete
+     flex-autopair
      xcscope
      emamux
      markdown-mode
