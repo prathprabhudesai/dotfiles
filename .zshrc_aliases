@@ -1,0 +1,28 @@
+## TMUX aliases
+alias tn='tmux new -s'
+alias tk='tmux kill-session -t'
+alias tl='tmux list-sessions'
+alias ta='tmux attach -t'
+
+## GIT aliases
+alias gs='git status | grep modified'
+alias gc='git commit'
+alias push='git push'
+alias gch='git checkout'
+alias pull='git pull'
+alias gb='git branch'
+alias gchb='git checkout -b'
+alias ga='git add'
+alias gca='git commit --amend'
+alias gfiles='git status | grep modified | cut -f2 -d":"'
+alias gpull='/home/linuxbrew/.linuxbrew/bin/gpull'
+
+## ZSH aliases
+alias rel='source ~/.zshrc'
+alias config='vi ~/.zshrc'
+alias aliases='vi ~/.zshrc_aliases'
+alias zfunctions='vi ~/.zshrc_functions'
+alias brew='/home/linuxbrew/.linuxbrew/bin/brew'
+alias agi='sudo apt-get install'
+alias agupdate='sudo apt-get update'
+alias agupgrade='sudo apt-get upgrade'
