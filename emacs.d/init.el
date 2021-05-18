@@ -35,6 +35,7 @@
      spacemacs-theme
      spaceline
      flycheck
+     use-package
      ;; python support
      elpy
      py-autopep8
