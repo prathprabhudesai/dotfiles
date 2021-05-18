@@ -41,6 +41,7 @@
      ;; latex support
      auctex
      auto-complete-auctex
+     pdf-tools
      )
   )
 
