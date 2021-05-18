@@ -26,3 +26,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh_packag
 
 # basic vim setup
 https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
+
+
+# latex
+<code>brew install mactex </code>
+##latexmk
+https://mg.readthedocs.io/latexmk.html
