@@ -20,7 +20,7 @@
 ;; install packages from the list if not installed
 (defvar install-package-list '(
      auto-complete
-     flex-autopair
+     autopair
      xcscope
      emamux
      markdown-mode
@@ -35,16 +35,8 @@
      spacemacs-theme
      spaceline
      flycheck
-     use-package
-     ;; python support
      elpy
      py-autopep8
-     ;; latex support
-     auctex
-     auto-complete-auctex
-     pdf-tools
-     auctex-latexmk
-     latex-extra
      )
   )
 
@@ -56,8 +48,9 @@
 ;; configure installed and exising packages
 
 ;; auto-pair-mode
-(require 'flex-autopair)
-(flex-autopair-mode 1)
+(require 'autopair)
+(autopair-global-mode)
+(setq autopair-autowrap t)
 
 ;; auto-complete-mode
 ;;(require 'auto-complete-config)
